@@ -40,7 +40,7 @@ Execução
 uvicorn main:app --reload
 ```
 
-verificação
+Verificação
 
 ```
 [root@localhost ~]# curl -X POST "http://127.0.0.1:8000/token" -d "username=alice&password=alicepassword"
