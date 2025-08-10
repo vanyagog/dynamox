@@ -1,36 +1,36 @@
 
 # SecOps Analysis
 
-## Потенциальные риски безопасности
+## Riscos potenciais de segurança
 
-| Риск                                         | Описание                                                                                  |
+| Risco                                         | Descrição                                                                                  |
 |----------------------------------------------|-------------------------------------------------------------------------------------------|
-| 1. Неаутентифицированный доступ к API        | API backend доступен без аутентификации, что позволяет любому получить данные и исказить статистику. |
-| 2. Отсутствие шифрования трафика             | Трафик между клиентом и сервисом передаётся без HTTPS, что может привести к перехвату и изменению данных. |
-| 3. Уязвимости в сторонних библиотеках        | Используемые библиотеки Python могут содержать известные уязвимости.                       |
-| 4. Недостаточная изоляция контейнеров        | Контейнеры могут иметь избыточные привилегии и возможности взаимодействия.                 |
-| 5. Хранение секретов и паролей в открытом виде| Секреты и пароли могут быть неправильно сохранены, что увеличивает риск компрометации.    |
-| 6. Недостаточный мониторинг и логирование     | Отсутствие централизованного логирования и мониторинга усложняет обнаружение инцидентов. |
-| 7. Возможные DoS-атаки                         | Отсутствие ограничений на число запросов может привести к перегрузке сервиса.             |
-| 8. Небезопасные права доступа в Kubernetes   | Избыточные права доступа могут привести к эскалации привилегий внутри кластера.           |
+| 1. Acesso não autenticado à API        | 	O backend da API está acessível sem autenticação, permitindo que qualquer pessoa obtenha dados e distorça as estatísticas. |
+| 2. Falta de criptografia do tráfego            | 	O tráfego entre o cliente e o serviço é transmitido sem HTTPS, podendo levar à interceptação e alteração dos dados. |
+| 3. Vulnerabilidades em bibliotecas de terceiros        | As bibliotecas Python utilizadas podem conter vulnerabilidades conhecidas.                      |
+| 4. Isolamento insuficiente dos containers        | Os containers podem ter privilégios excessivos e capacidades de interação não controladas.               |
+| 5. Armazenamento de segredos e senhas em texto aberto| Segredos e senhas podem ser armazenados incorretamente, aumentando o risco de comprometimento.    |
+| 6. Monitoramento e logging insuficientes    | A ausência de logging centralizado e monitoramento dificulta a detecção de incidentes. |
+| 7. Possíveis ataques DoS                        | 	A falta de limitação no número de requisições pode levar à sobrecarga do serviço.           |
+| 8. Permissões inseguras no Kubernetes   | Permissões excessivas podem levar à escalada de privilégios dentro do cluster.           |
 
-## Меры по снижению рисков
+## Medidas para mitigação de riscos
 
-- Внедрить аутентификацию и авторизацию API (например, OAuth2, JWT или API-ключи).  
-- Настроить HTTPS/TLS для всех внешних и внутренних коммуникаций (Ingress с сертификатами Let's Encrypt).  
-- Регулярно обновлять зависимости и использовать инструменты сканирования уязвимостей (Snyk, Dependabot).  
-- Настроить политики безопасности контейнеров (Pod Security Policies, seccomp, AppArmor).  
-- Хранить секреты только в Kubernetes Secrets или специализированных системах управления секретами (HashiCorp Vault).  
-- Внедрить централизованное логирование и мониторинг с оповещениями (ELK, Prometheus, Grafana, Alertmanager).  
-- Ввести rate limiting и защиту от DoS на уровне API Gateway или Ingress контроллера.  
-- Минимизировать права доступа в Kubernetes с помощью RBAC и принципа наименьших привилегий.
+- Implementar autenticação e autorização na API (por exemplo, OAuth2, JWT ou chaves de API).  
+- Configurar HTTPS/TLS para todas as comunicações externas e internas (Ingress com certificados Let's Encrypt).  
+- Atualizar regularmente as dependências e usar ferramentas de análise de vulnerabilidades (Snyk, Dependabot).
+- Configurar políticas de segurança para containers (Pod Security Policies, seccomp, AppArmor).
+- Armazenar segredos apenas em Kubernetes Secrets ou em sistemas especializados de gerenciamento de segredos (HashiCorp Vault).
+- Implementar logging e monitoramento centralizados com alertas (ELK, Prometheus, Grafana, Alertmanager).
+- Aplicar rate limiting e proteção contra DoS no nível do API Gateway ou controlador Ingress.
+- Minimizar permissões no Kubernetes usando RBAC e o princípio do menor privilégio.
 
-## Рекомендации по реализации
+## Recomendações para implementação
 
-- Использовать встроенную поддержку OAuth2/JWT в FastAPI для защиты API.  
-- Настроить Ingress контроллер с TLS и базовой аутентификацией.  
-- Добавить проверку безопасности зависимостей в CI/CD пайплайн.  
-- Ограничить права сервис-аккаунтов Kubernetes, используемых приложениями.  
-- Настроить мониторинг и оповещения на подозрительную активность.
+- Usar o suporte nativo a OAuth2/JWT do FastAPI para proteger a API.
+- Configurar o controlador Ingress com TLS e autenticação básica.
+- Incluir verificação de segurança das dependências no pipeline CI/CD.
+- Restringir permissões das contas de serviço Kubernetes usadas pelas aplicações.
+- Configurar monitoramento e alertas para atividade suspeita.
 
 ---
