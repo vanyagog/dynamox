@@ -1,21 +1,10 @@
-6 - Bonus
-6.1 Архитектурная диаграмма
+
+# Bonus
+
+## 6.1 Diagrama arquitetônico
 
 <img width="1536" height="1024" alt="ChatGPT Image 10 авг  2025 г , 21_45_00" src="https://github.com/user-attachments/assets/bfde08a0-3b6c-4191-bc4c-01a0d2f5566f" />
 
-Backend (FastAPI или Nest.js)
-
-Extractor CronJob
-
-Kubernetes Cluster (Pods, Services)
-
-Persistence layer (PostgreSQL / MongoDB / Google Storage)
-
-Мониторинг (Prometheus, Grafana)
-
-CI/CD pipeline
-
-Могу сгенерировать для тебя схему в виде картинки или в PlantUML, Mermaid.
 
 6.2 Бэкенд
 Использовать FastAPI (Python) или Nest.js (Node.js)
