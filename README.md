@@ -1,18 +1,18 @@
 # Dynamox Dev-Sec-Fin-Ops Challenge
 
-## Описание проекта
+## Descrição do projeto
 
-Это реализация тестового задания для Dynamox Dev-Sec-Fin-Ops Challenge.  
-Проект включает два компонента:
+Esta é a implementação da tarefa de teste para o Dynamox Dev-Sec-Fin-Ops Challenge.
+O projeto inclui dois componentes:
 
-- **Backend Deployment** — сервис на FastAPI, считающий количество успешных API-запросов.  
-- **Extraction CronJob** — сервис, который каждые 15 минут извлекает текущее количество успешных запросов из Backend.
+- **Backend Deployment** — um serviço em FastAPI que conta a quantidade de requisições API bem-sucedidas.  
+- **Extraction CronJob** — um serviço que a cada 15 minutos extrai a quantidade atual de requisições bem-sucedidas do Backend.
 
-Оба сервиса можно запускать локально, в Docker и в Kubernetes (Minikube).
+Ambos os serviços podem ser executados localmente, no Docker e no Kubernetes (Minikube).
 
 ---
 
-## Структура проекта
+## Estrutura do projeto
 ```
 dev-sec-fin-ops-challenge/
 │
@@ -35,20 +35,20 @@ dev-sec-fin-ops-challenge/
 │
 ├── dev-sec-fin-ops-challenge-answer-template.md # Технический отчёт
 ├── .gitignore
-└── README.md # Этот файл
+└── README.md 
 ```
 ---
 
-## Компоненты и запуск
+## Componentes e execução
 
 ### Backend Deployment
 
-Сервис на FastAPI, который:
+Serviço em FastAPI que:
 
-- считает количество успешных HTTP-запросов (статус 2xx),
-- предоставляет REST API `/count` с этим числом.
+- conta o número de requisições HTTP bem-sucedidas (status 2xx),
+- disponibiliza uma API REST /count com esse número.
 
-#### Запуск локально
+#### Execução local
 ```
 cd backend
 python3 -m venv .venv
@@ -59,19 +59,19 @@ uvicorn main:app --reload
 http://127.0.0.1:8000/
 ```
 
-Проверка API:
+Verificação da API:
 ```
 curl http://127.0.0.1:8000/
 curl http://127.0.0.1:8000/count
 ```
 
-Запуск в Docker
+Execução no Docker:
 ```
 docker build -t backend-counter backend/
 docker run -p 8000:8000 backend-counter
 ```
 
-Запуск в Minikube
+Execução no Minikube
 ```
 eval $(minikube docker-env)
 docker build -t backend-counter backend/
@@ -81,22 +81,22 @@ minikube service backend
 ```
 
 Extraction CronJob
-Сервис, который каждые 15 минут запрашивает количество успешных запросов из Backend и выводит результат в лог.
+Serviço que a cada 15 minutos solicita o número de requisições bem-sucedidas do Backend e registra o resultado no log.
 
-Запуск локально
+Execução local
 ```
 cd extractor
 pip install -r requirements.txt
 BACKEND_URL=http://127.0.0.1:8000/count python extractor.py
 ```
 
-Запуск в Docker
+Execução no Docker
 ```
 docker build -t extractor extractor/
 docker run --rm -e BACKEND_URL="http://backend:8000/count" extractor
 ```
 
-Запуск в Minikube (Kubernetes CronJob)
+Execução no Minikube (Kubernetes CronJob)
 ```
 eval $(minikube docker-env)
 docker build -t extractor extractor/
@@ -106,9 +106,9 @@ kubectl get jobs
 kubectl logs <job-pod-name>
 ```
 
-Переменные окружения
+Variáveis de ambiente
 
-| Переменная      | Описание                                   | Значение по умолчанию              |
+| Variável        | Descrição                                  | Valor padrão                      |
 |-----------------|--------------------------------------------|-----------------------------------|
-| BACKEND_URL     | URL для запроса количества успешных запросов | http://127.0.0.1:8000/count (локально) |
+| BACKEND_URL     | URL para consulta do número de requisições bem-sucedidas | http://127.0.0.1:8000/count (localmente) |
 
