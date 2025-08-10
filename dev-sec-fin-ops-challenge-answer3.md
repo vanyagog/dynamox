@@ -1,30 +1,30 @@
 
 # DevOps Analysis
 
-## Процесс выпуска новой версии сервисов
+## Processo de lançamento de nova versão dos serviços
 
-1. **Разработка и коммиты**  
-   Разработчик вносит изменения в код и пушит их в основную ветку репозитория (например, `main`).
+1. **Desenvolvimento e commits**  
+   O desenvolvedor faz alterações no código e realiza push para o branch principal do repositório (por exemplo, main).
 
-2. **Continuous Integration (CI)**  
-   При каждом пуше запускается CI-пайплайн, который выполняет:  
-   - Проверку качества кода (линтеры, тесты).  
-   - Сборку Docker-образов для backend и extractor сервисов.  
-   - Проверку успешности сборки.
+2. **Integração Contínua (CI)**  
+   A cada push, é executado o pipeline de CI que realiza: 
+   - Verificação da qualidade do código (linters, testes).  
+   - Build das imagens Docker para os serviços backend e extractor. 
+   - Verificação do sucesso da build.
 
-3. **Continuous Deployment (CD)**  
-   После успешного CI выполняется CD-процесс, включающий:  
-   - Тэгирование и публикацию Docker-образов в реестр (Docker Hub, GitHub Container Registry или приватный).  
-   - Обновление Kubernetes-манифестов с новыми тегами образов.  
-   - Деплой в тестовое/staging окружение.  
-   - Автоматическое или ручное тестирование.
+3. **Deploy Contínuo  (CD)**  
+   Após o CI ser bem-sucedido, é executado o processo de CD que inclui:  
+   - Tagueamento e publicação das imagens Docker no registro (Docker Hub, GitHub Container Registry ou privado).
+   - Atualização dos manifests do Kubernetes com as novas tags das imagens. 
+   - Deploy no ambiente de teste/staging. 
+   - Testes automáticos ou manuais.
 
-4. **Релиз в production**  
-   После успешного тестирования обновления продвигаются в production, с мониторингом и оповещениями о статусе.
+4. **Release em produção**  
+   Após testes bem-sucedidos, as atualizações são promovidas para produção, com monitoramento e alertas sobre o status.
 
-## Автоматизация: CI/CD Pipeline
+## Automação: Pipeline de CI/CD
 
-Для автоматизации процесса предлагается использовать GitHub Actions с таким пайплайном:
+Para automatizar o processo, propõe-se usar GitHub Actions com o seguinte pipeline:
 
 ```yaml
 name: CI/CD Pipeline
@@ -73,17 +73,16 @@ jobs:
           args: apply -f k8s/
 ```
 
-### Комментарии
+### Comentários
 
-- В переменных окружения и секретах хранится доступ к Docker Registry и Kubernetes.  
-- Образы помечаются тегом коммита для удобства отслеживания.  
-- Манифесты Kubernetes можно параметризовать для использования этих тегов, например с помощью Helm или Kustomize.
+- O acesso ao Docker Registry e Kubernetes é armazenado em variáveis de ambiente e secrets.  
+- As imagens são marcadas com a tag do commit para facilitar o rastreamento.
+- Os manifests do Kubernetes podem ser parametrizados para usar essas tags, por exemplo, com Helm ou Kustomize.
 
-## Рекомендации по улучшению
+## Recomendações para melhoria
 
-- Добавить автоматическое тестирование в пайплайн (юнит, интеграционные тесты).  
-- Использовать Canary или Blue-Green деплойменты для минимизации рисков.  
-- Настроить мониторинг и алертинг (Prometheus, Grafana, Slack).  
-- Организовать ручное подтверждение релиза в production, если требуется.
-
+- Adicionar testes automáticos no pipeline (unitários, integrados).  
+- Usar deploys Canary ou Blue-Green para minimizar riscos. 
+- Configurar monitoramento e alertas (Prometheus, Grafana, Slack). 
+- Implementar confirmação manual do release em produção, se necessário.
 ---
